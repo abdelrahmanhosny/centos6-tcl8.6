@@ -12,3 +12,9 @@ RUN wget https://downloads.sourceforge.net/tcl/tcl8.6.9-src.tar.gz && \
 COPY install.sh ./tcl8.6.9/install.sh
 WORKDIR /tcl8.6.9
 RUN ./install.sh
+
+FROM centos:centos6 as runner
+COPY --from=builder /usr/lib /usr/lib
+COPY --from=builder /usr/share /usr/share
+COPY --from=builder /usr/bin /usr/bin
+COPY --from=builder /usr/lib64 /usr/lib64
